@@ -48,6 +48,7 @@ def execute_stored_procedure(engine, procedure_name, db_type, responce=False):
             if db_type == 'mysql':
                 result = connection.execute(text(f"CALL {procedure_name}()"))
             elif db_type == 'sqlserver':
+                connection = connection.execution_options(autocommit=True)
                 result = connection.execute(text(f"EXEC {procedure_name}"))
             else:
                 raise ValueError(f"Unsupported database type: {db_type}")
